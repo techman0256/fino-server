@@ -4,6 +4,6 @@ const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
     res.json({message : "hello fino-server is running with typescript !"})
-})
+});
 
 export default router;
