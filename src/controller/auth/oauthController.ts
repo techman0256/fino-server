@@ -76,9 +76,9 @@ const validateAuthorizationCode = async (req: Request, res: Response) => {
       if (profilePicture) user.profilePicture = profilePicture;
     }
     // Case 3 : User don't exist
-    if (!user) user = await User.create({username: username, email: email, profilePicture: profilePicture});
+    if (!user) user = await User.create({username: username, email: email, profilePicture: profilePicture, provider: 'google'});
     const token = generateSessionToken(user);
-    res.status(200).json({message: "Signed In Successfully ....." , sessionToken: token});
+    res.status(200).json({message: "Signed In Successfully ....." , userId: user.id});
   } catch (e) {
     if (e instanceof OAuth2RequestError) {
       // console.error("OAuth2 error:", e);
@@ -91,10 +91,8 @@ const validateAuthorizationCode = async (req: Request, res: Response) => {
     }
 
     // console.error("Unexpected error:", e);
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error", message: e });
   } 
 }
-
-
 
 export default {getGoogleLoginPage, validateAuthorizationCode};

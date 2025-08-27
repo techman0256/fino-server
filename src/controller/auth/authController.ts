@@ -4,6 +4,15 @@ import bcrypt from 'bcrypt'
 import User, { IUser } from "../../models/User.js";
 
 const SESSION_TOKEN_DURATION = 60 * 60; // Currently expires in 1 hour
+
+// cookie configuration for JWT Token
+const tokenConfig = {
+  httpOnly: true,
+  secure: true,
+  maxAge: SESSION_TOKEN_DURATION,
+  path: "/",
+}
+
 interface SessionPayload {
     userId: string, 
     username: string, 
@@ -12,9 +21,6 @@ interface SessionPayload {
 }
 
 const SignUp = async (req: Request, res: Response) => {
-
-    console.log("Signing up ..............................>>");
-    
     try {
         const {username, email, password} = req.body;
         let user = await User.findOne({email});
@@ -28,8 +34,11 @@ const SignUp = async (req: Request, res: Response) => {
         
         // create the user and generate session token
         user = await User.create({username: username, email: email, password: hashedPassword});
+        const userObj = user.toObject();
+        delete userObj.password;
         const token = generateSessionToken(user);
-        res.status(200).json({message: "Signed Up Successfully ....." , sessionToken: token});
+        res.cookie('JWT', token, tokenConfig);
+        res.status(200).json({message: "Signed Up Successfully ....." , user : userObj});
 
 
     } catch (error) {
@@ -39,9 +48,9 @@ const SignUp = async (req: Request, res: Response) => {
 };
 
 const SignIn = async (req: Request, res: Response) => {
-    console.log("running sign in method >>>>>");
-    
     try {
+        console.log("this is request " ,req);
+        
         const {email, password} = req.body;
         // 1. chech if user exists
         const user = await User.findOne({ email });
@@ -57,7 +66,10 @@ const SignIn = async (req: Request, res: Response) => {
         }
 
         const token = generateSessionToken(user);
-        res.status(200).json({message: "Signed In Successfully ....." , sessionToken: token});
+        const userObj = user.toObject();
+        delete userObj.password;
+        res.cookie('JWT', token, tokenConfig);
+        res.status(200).json({message: "Signed In Successfully ....." , user: userObj});
 
     } catch (error) {
         console.error("Signin error:", error);
@@ -76,13 +88,16 @@ export const generateSessionToken = (user: IUser): string => {
   return token;
 }
 
-export const validateSessionToken = (token : string): SessionPayload | {message: string} => {
+export const validateSessionToken = async(token : string)  => {
     try {
         const decoded = JWT.verify(token, `Don't tell the secret`) as SessionPayload;
-        console.log(decoded);
-        return decoded
+        const {userId} = decoded;
+        const user = User.findOne({ userId }).select('-password');
+        if (!user) return { message: 'User not found', validated: false };
+
+        return {messaage: "Successfully validated", user: user, validated: true};
     } catch (error: any) {
-        return {message: error.name || "Token validation failed"}
+        return {message: error.name || "Token validation failed", validated: false}
     }
 }
 
