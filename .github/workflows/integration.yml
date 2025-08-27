@@ -36,7 +36,7 @@ jobs:
       env: 
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          test_db_username: ${{ secrets.test_db_username }}\
-          test_db_password: ${{ secrets.test_db_password }}
+          TEST_DB_USERNAME: ${{ secrets.TEST_DB_USERNAME }}\
+          TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
           PORT: ${{ vars.PORT }}
 
