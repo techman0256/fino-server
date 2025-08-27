@@ -1,4 +1,4 @@
-import {Router, Request, Response, response} from 'express';
+import {Router, Request, Response} from 'express';
 import oauth from "../controller/auth/oauthController.js";
 import auth from "../controller/auth/authController.js"
 const authRoutes = Router();
@@ -8,8 +8,6 @@ authRoutes.get("/", (req: Request, res: Response) => {
 })
 
 authRoutes.post('/signup', async (req: Request, res: Response) => {
-    // console.log("Running signup routes");
-    
     auth.SignUp(req, res);
 });
 authRoutes.post('/signin', async (req: Request, res: Response) => {
