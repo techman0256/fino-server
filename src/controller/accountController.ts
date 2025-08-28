@@ -1,7 +1,5 @@
-import Account from '../models/Account.js';
+import Account from '../models/Account';
 import { Router, Request, Response } from "express";
-import { IAccount } from '../models/Account.js';
-import { IUser } from '../models/User.js';
 
 export const getAccounts = async (req: Request, res: Response) => {
   try {
