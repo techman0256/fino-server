@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import {Google, generateState, generateCodeVerifier, decodeIdToken} from "arctic";
 import { ArcticFetchError, OAuth2RequestError } from "arctic";
-import User from "../../models/User.js";
 import dotenv from "dotenv";
-import {generateSessionToken} from './authController.js'
+
+import User from "../../models/User";
+import {generateSessionToken} from './authController'
 
 dotenv.config();
 

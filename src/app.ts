@@ -2,10 +2,10 @@ import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-import accountRoutes from "./routes/accountRoutes.js";
-import transactionRoutes from "./routes/transactionRoutes.js"
-import indexRoutes from "./routes/index.js";
-import authRoutes from "./routes/authRoutes.js";
+import accountRoutes from "./routes/accountRoutes";
+import transactionRoutes from "./routes/transactionRoutes"
+import indexRoutes from "./routes/index";
+import authRoutes from "./routes/authRoutes";
 dotenv.config();
 
 const app: Application = express();

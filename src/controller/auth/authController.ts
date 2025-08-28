@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import JWT from "jsonwebtoken";
 import bcrypt from 'bcrypt'
-import User, { IUser } from "../../models/User.js";
+import User, { IUser } from "../../models/User";
 
 const SESSION_TOKEN_DURATION = 60 * 60; // Currently expires in 1 hour
 

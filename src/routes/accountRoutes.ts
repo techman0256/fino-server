@@ -4,7 +4,7 @@ import {
   createAccount,
   updateAccount,
   deleteAccount,
-} from '../controller/accountController.js';
+} from '../controller/accountController';
 const accountRoutes = Router();
 
 accountRoutes.get('/', getAccounts);         // US-AC-01, US-AC-05

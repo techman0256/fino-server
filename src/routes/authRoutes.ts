@@ -1,6 +1,6 @@
 import {Router, Request, Response} from 'express';
-import oauth from "../controller/auth/oauthController.js";
-import auth from "../controller/auth/authController.js"
+import oauth from "../controller/auth/oauthController";
+import auth from "../controller/auth/authController"
 const authRoutes = Router();
 
 authRoutes.get("/", (req: Request, res: Response) => {
