@@ -9,7 +9,7 @@ describe("Auth Routes", () => {
         .expect(200);
 
       expect(response.body).toEqual({
-        message: "This is not the auth routes"
+        message: "This is the auth routes"
       });
     });
 
