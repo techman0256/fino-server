@@ -31,12 +31,12 @@ jobs:
       run: npm install
     - name: "Build Typescript"
       run: npx tsc
-    - name: "Start server"
-      run: npm start
+    - name: "Run Unit-tests"
+      run: npm test
       env: 
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          TEST_DB_USERNAME: ${{ secrets.TEST_DB_USERNAME }}\
+          TEST_DB_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
           TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
           PORT: ${{ vars.PORT }}
 
