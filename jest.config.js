@@ -8,5 +8,6 @@ export default {
       useESM: true,
     },
   },
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"]
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  modulePathIgnorePatterns: ["<rootDir>/dist/"],
 };

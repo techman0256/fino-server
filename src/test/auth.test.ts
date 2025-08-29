@@ -1,25 +1,28 @@
-import request from "supertest";
-import app from "../app";
+import { jest } from "@jest/globals";
+import { generateSessionToken } from "../controller/auth/authController";
+import jwt from "jsonwebtoken";
+import { IUser } from "../models/User";
 
-describe("Auth Routes", () => {
-  describe("GET /auth", () => {
-    it("should return welcome message", async () => {
-      const response = await request(app)
-        .get("/auth")
-        .expect(200);
+describe("generateSessionToken", () => {
+  afterEach(() => {
+    jest.restoreAllMocks(); // clean up spies after each test
+  });
 
-      expect(response.body).toEqual({
-        message: "This is the auth routes"
-      });
-    });
+  it("should call jwt.sign with correct payload", () => {
+    const fakeUser = { id: "123", username: "pranav" } as unknown as IUser;
 
-    it("should return JSON content type", async () => {
-      const response = await request(app)
-        .get("/auth")
-        .expect(200)
-        .expect("Content-Type", /json/);
+    // Spy on jwt.sign and make it return a fake value
+    const signSpy = jest
+      .spyOn(jwt, "sign")
+      .mockReturnValue("fakeToken" as any);
 
-      expect(response.body.message).toBe("This is the auth routes");
-    });
+    const token = generateSessionToken(fakeUser);
+    // Assertions
+    expect(signSpy).toHaveBeenCalledWith(
+      { userId: "123", username: "pranav" },
+      "Don't tell the secret",
+      { expiresIn: 60 * 60 }
+    );
+    expect(token).toBe("fakeToken");
   });
 });
