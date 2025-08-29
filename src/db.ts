@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv"
 dotenv.config();
-const MONGO_URI = `mongodb+srv://${process.env.test_db_username}:${process.env.test_db_password}@cluster0.ps3rtcy.mongodb.net/`
+const MONGO_URI = `mongodb+srv://${process.env.TEST_DB_USERNAME}:${process.env.TEST_DB_PASSWORD}@cluster0.ps3rtcy.mongodb.net/`
+console.log(MONGO_URI);
 
 const connectDB = async () => {
     try {
