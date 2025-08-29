@@ -17,7 +17,6 @@ describe("generateSessionToken", () => {
       .mockReturnValue("fakeToken" as any);
 
     const token = generateSessionToken(fakeUser);
-
     // Assertions
     expect(signSpy).toHaveBeenCalledWith(
       { userId: "123", username: "pranav" },

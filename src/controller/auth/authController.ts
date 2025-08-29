@@ -42,15 +42,12 @@ const SignUp = async (req: Request, res: Response) => {
 
 
     } catch (error) {
-        console.error("Signup error:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+        res.status(500).json({ message: "Internal Server Error", error: error });
     }
 };
 
 const SignIn = async (req: Request, res: Response) => {
-    try {
-        console.log("this is request " ,req);
-        
+    try {        
         const {email, password} = req.body;
         // 1. chech if user exists
         const user = await User.findOne({ email });
