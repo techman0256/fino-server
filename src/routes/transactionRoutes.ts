@@ -13,7 +13,9 @@ const transactionRoutes = Router();
 transactionRoutes.get("/", getTransactions);
 
 // US-TR-02: Add a new transaction
-transactionRoutes.post("/", createTransaction);
+transactionRoutes.post("/", (req: Request, res: Response) => {
+  createTransaction(req, res)
+});
 
 // US-TR-03: Edit a transaction
 transactionRoutes.put("/:id", (req: Request, res: Response) => {
