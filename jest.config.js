@@ -8,6 +8,9 @@ export default {
       useESM: true,
     },
   },
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1",  // strip ".js" in tests
+  },
+  // setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   modulePathIgnorePatterns: ["<rootDir>/dist/"],
 };
