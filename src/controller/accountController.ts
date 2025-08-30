@@ -1,5 +1,6 @@
-import Account from '../models/Account';
 import { Request, Response } from "express";
+
+import Account from '../models/Account.js';
 
 export const getAccounts = async (req: Request, res: Response) => {
   try {
@@ -8,16 +9,16 @@ export const getAccounts = async (req: Request, res: Response) => {
       10
     );
 
-    if (isNaN(page) || page < 1) page = 1; // ✅ clamp page to min=1
+    if (isNaN(page) || page < 1) page = 1;
 
     const pageSize = 20;
     const skip = (page - 1) * pageSize;
 
     const cond: any = {};
-    if (req.query.userId) cond.userId = req.query.userId; // ✅ don’t set undefined
+    if (req.query.userId) cond.userId = req.query.userId;
     if (req.query.type) cond.type = req.query.type;
     if (req.query.searchTerm)
-      cond.name = { $regex: req.query.searchTerm, $options: 'i' }; // fuzzy match
+      cond.name = { $regex: req.query.searchTerm, $options: 'i' };
     if (req.query.minBalance) {
       cond.balance = { ...cond.balance, $gte: Number(req.query.minBalance) };
     }
@@ -31,8 +32,8 @@ export const getAccounts = async (req: Request, res: Response) => {
     const accounts = await Account.find(cond).skip(skip).limit(pageSize);
 
     res.status(200).json({
-      page,                // ✅ always return normalized page
-      pageSize,            // ✅ helpful for clients
+      page,
+      pageSize,
       total,
       totalPages,
       data: accounts
@@ -46,7 +47,6 @@ export const createAccount = async (req: Request, res: Response) => {
   try {
     const { name, balance, type } = req.body;
 
-    // ✅ guard against missing userId in query
     if (!req.query.userId) {
       return res.status(400).json({ error: "Missing userId" });
     }
@@ -58,7 +58,7 @@ export const createAccount = async (req: Request, res: Response) => {
       type,
     });
 
-    await newAccount.save(); // ✅ will trigger schema validations (min balance, enum)
+    await newAccount.save();
     res
       .status(201)
       .json({ data: newAccount, message: "Account created successfully." });
@@ -76,7 +76,7 @@ export const updateAccount = async (req: Request, res: Response) => {
       req.body,
       {
         new: true,
-        runValidators: true,   // ✅ enforce schema validation on update
+        runValidators: true,
       }
     );
 

@@ -3,8 +3,8 @@ import {Google, generateState, generateCodeVerifier, decodeIdToken} from "arctic
 import { ArcticFetchError, OAuth2RequestError } from "arctic";
 import dotenv from "dotenv";
 
-import User from "../../models/User";
-import {generateSessionToken} from './authController'
+import User from "../../models/User.js";
+import {generateSessionToken} from './authController.js'
 
 dotenv.config();
 
