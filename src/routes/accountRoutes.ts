@@ -8,7 +8,9 @@ import {
 const accountRoutes = Router();
 
 accountRoutes.get('/', getAccounts);         // US-AC-01, US-AC-05
-accountRoutes.post('/', createAccount); // US-AC-02
+accountRoutes.post('/', (req: Request, res: Response) => {
+  createAccount(req, res);
+}); // US-AC-02
 accountRoutes.put('/:id', (req: Request, res: Response) => {
   updateAccount(req, res);
 });   // US-AC-03
